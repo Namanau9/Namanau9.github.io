@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Are You Straight?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f8ff;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .buttons {
+            position: relative;
+            width: 300px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn {
+            font-size: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-yes {
+            background-color: #007bff;
+            color: white;
+            position: absolute;
+        }
+
+        .btn-no {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-no:hover {
+            background-color: #1e7e34;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 10px;
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Are you straight?</h1>
+    <div class="buttons" id="buttonContainer">
+        <button class="btn btn-yes" id="yesBtn">Yes</button>
+        <button class="btn btn-no" onclick="alert('Glad you chose honesty!')">No</button>
+    </div>
+
+    <footer>
+        Built for fun hehe &copy; Naman
+    </footer>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const container = document.getElementById('buttonContainer');
+        const noBtn = document.querySelector('.btn-no');
+
+        yesBtn.addEventListener('mouseover', () => {
+            const containerRect = container.getBoundingClientRect();
+            const noBtnRect = noBtn.getBoundingClientRect();
+
+            let randomX, randomY;
+
+            // Generate a random position for the Yes button
+            do {
+                randomX = Math.random() * (containerRect.width - yesBtn.offsetWidth);
+                randomY = Math.random() * (containerRect.height - yesBtn.offsetHeight);
+            } while (
+                // Ensure the Yes button does not overlap with the No button
+                randomX + yesBtn.offsetWidth > noBtnRect.left - containerRect.left &&
+                randomX < noBtnRect.right - containerRect.left &&
+                randomY + yesBtn.offsetHeight > noBtnRect.top - containerRect.top &&
+                randomY < noBtnRect.bottom - containerRect.top
+            );
+
+            // Update the Yes button's position
+            yesBtn.style.left = `${randomX}px`;
+            yesBtn.style.top = `${randomY}px`;
+        });
+
+        // Prevent the "Yes" button from being clicked
+        yesBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert("You can't click me!");
+        });
+    </script>
+</body>
+</html>
